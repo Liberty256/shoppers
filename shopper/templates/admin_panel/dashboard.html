@@ -1,0 +1,16 @@
+{% extends 'admin_panel/base.html' %}
+{% block title %}Admin overview | Shoppers{% endblock %}
+{% block admin_content %}
+<div class="page-heading"><div><p class="eyebrow">Admin workspace</p><h1 class="page-title">Store overview</h1><p class="page-subtitle">A live view of customers, inventory, and fulfilment.</p></div><a class="btn btn-primary" href="{% url 'add_product' %}"><i class="bi bi-plus-lg me-1"></i>Add product</a></div>
+<div class="metric-grid">
+    <div class="metric"><div class="metric-top"><span class="metric-label">Customers</span><span class="metric-icon"><i class="bi bi-people"></i></span></div><strong>{{ total_customers }}</strong></div>
+    <div class="metric"><div class="metric-top"><span class="metric-label">Active products</span><span class="metric-icon"><i class="bi bi-box-seam"></i></span></div><strong>{{ total_products }}</strong></div>
+    <div class="metric"><div class="metric-top"><span class="metric-label">Total orders</span><span class="metric-icon"><i class="bi bi-receipt"></i></span></div><strong>{{ total_orders }}</strong></div>
+    <div class="metric"><div class="metric-top"><span class="metric-label">Delivered revenue</span><span class="metric-icon"><i class="bi bi-cash-stack"></i></span></div><strong>${{ total_revenue }}</strong></div>
+</div>
+{% if unassigned_orders %}<div class="alert alert-warning d-flex justify-content-between align-items-center"><span><strong>{{ unassigned_orders }}</strong> active order{{ unassigned_orders|pluralize }} need a delivery agent.</span><a href="{% url 'manage_orders' %}" class="alert-link">Assign now</a></div>{% endif %}
+<div class="dashboard-grid">
+    <div class="panel"><div class="panel-header"><h2>Recent orders</h2><a href="{% url 'manage_orders' %}">View all</a></div><div class="table-responsive"><table class="table"><thead><tr><th>Order</th><th>Customer</th><th>Total</th><th>Status</th></tr></thead><tbody>{% for order in recent_orders %}<tr><td><strong>#{{ order.id }}</strong></td><td>{{ order.customer_name|default:order.user.username }}</td><td>${{ order.total_price }}</td><td><span class="status status-{{ order.status_key }}">{{ order.state }}</span></td></tr>{% empty %}<tr><td colspan="4" class="text-center text-muted py-5">No orders have been placed.</td></tr>{% endfor %}</tbody></table></div></div>
+    <div class="panel"><div class="panel-header"><h2>Inventory</h2><a href="{% url 'manage_products' %}">Manage</a></div><div class="table-responsive"><table class="table"><thead><tr><th>Product</th><th>Stock</th><th>Price</th></tr></thead><tbody>{% for product in recent_products %}<tr><td><strong>{{ product.name }}</strong><div class="text-muted small">{{ product.category.name }}</div></td><td>{% if product.stock <= 5 %}<span class="text-danger fw-semibold">{{ product.stock }}</span>{% else %}{{ product.stock }}{% endif %}</td><td>${{ product.price }}</td></tr>{% empty %}<tr><td colspan="3" class="text-center text-muted py-5">Add your first product.</td></tr>{% endfor %}</tbody></table></div></div>
+</div>
+{% endblock %}

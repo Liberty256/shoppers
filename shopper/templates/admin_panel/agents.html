@@ -1,0 +1,9 @@
+{% extends 'admin_panel/base.html' %}
+{% block title %}Delivery agents | Shoppers Admin{% endblock %}
+{% block admin_content %}
+<div class="page-heading"><div><p class="eyebrow">Delivery team</p><h1 class="page-title">Delivery agents</h1><p class="page-subtitle">Create accounts and control access to assigned deliveries.</p></div><a class="btn btn-primary" href="{% url 'add_agent' %}"><i class="bi bi-person-plus me-1"></i>Add agent</a></div>
+<div class="panel"><div class="table-responsive"><table class="table"><thead><tr><th>Agent</th><th>Contact</th><th>Vehicle</th><th>Assigned units</th><th>Access</th><th></th></tr></thead><tbody>
+{% for agent in agents %}<tr><td><div class="d-flex align-items-center gap-2"><span class="avatar">{{ agent.user.first_name|default:agent.user.username|first|upper }}</span><div><strong>{{ agent }}</strong><div class="text-muted small">@{{ agent.user.username }}</div></div></div></td><td>{{ agent.phone }}<div class="text-muted small">{{ agent.user.email }}</div></td><td>{{ agent.vehicle_number|default:"Not provided" }}</td><td>{{ agent.order_total|default:0 }}</td><td>{% if agent.is_active %}<span class="status status-delivered">Active</span>{% else %}<span class="status status-cancelled">Disabled</span>{% endif %}</td><td class="text-end"><form method="post" action="{% url 'toggle_agent' agent.id %}">{% csrf_token %}<button class="btn btn-sm {% if agent.is_active %}btn-outline-danger{% else %}btn-outline-primary{% endif %}" type="submit">{% if agent.is_active %}Disable{% else %}Activate{% endif %}</button></form></td></tr>
+{% empty %}<tr><td colspan="6" class="text-center text-muted py-5">No agents yet. Create the first delivery account.</td></tr>{% endfor %}
+</tbody></table></div></div>
+{% endblock %}

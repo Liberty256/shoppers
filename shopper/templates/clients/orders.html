@@ -1,0 +1,10 @@
+{% extends 'base.html' %}
+{% block title %}My orders | Shoppers{% endblock %}
+{% block content %}
+<section class="content-section"><div class="container">
+    <div class="page-heading"><div><p class="eyebrow">Purchase history</p><h1 class="page-title">My orders</h1><p class="page-subtitle">Updates from checkout through delivery.</p></div><a class="btn btn-outline-primary" href="{% url 'home' %}">Continue shopping</a></div>
+    {% if orders %}<div class="panel"><div class="table-responsive"><table class="table"><thead><tr><th>Order</th><th>Item</th><th>Total</th><th>Placed</th><th>Delivery</th><th>Status</th></tr></thead><tbody>
+    {% for order in orders %}<tr><td><strong>#{{ order.id }}</strong></td><td>{{ order.product_name }} <span class="text-muted">× {{ order.quantity }}</span></td><td><strong>${{ order.total_price }}</strong></td><td>{{ order.order_date|date:"M j, Y" }}</td><td>{% if order.assigned_agent %}{{ order.assigned_agent }}{% else %}<span class="text-muted">Awaiting assignment</span>{% endif %}</td><td><span class="status status-{{ order.status_key }}">{{ order.state }}</span></td></tr>{% endfor %}
+    </tbody></table></div></div>{% else %}<div class="empty-state"><i class="bi bi-box-seam"></i><h3>No orders yet</h3><p>Your purchases and delivery updates will appear here.</p><a class="btn btn-primary" href="{% url 'home' %}">Explore products</a></div>{% endif %}
+</div></section>
+{% endblock %}

@@ -1,0 +1,25 @@
+{% extends 'base.html' %}
+{% block title %}Create account | Shoppers{% endblock %}
+{% block content %}
+<div class="auth-layout">
+    <aside class="auth-aside"><p class="eyebrow text-warning">Join Shoppers</p><h1>Checkout once. Stay in the loop.</h1><p>Your account keeps every purchase, delivery update, and receipt in one place.</p></aside>
+    <section class="auth-main">
+        <form method="post" class="auth-form form-shell">
+            {% csrf_token %}<h2>Create your account</h2><p>A few details and you are ready to shop.</p>
+            {% if form.non_field_errors %}<div class="alert alert-danger">{{ form.non_field_errors }}</div>{% endif %}
+            <div class="row g-3">
+                <div class="col-sm-6 form-field"><label for="{{ form.first_name.id_for_label }}">First name</label>{{ form.first_name }}{{ form.first_name.errors }}</div>
+                <div class="col-sm-6 form-field"><label for="{{ form.last_name.id_for_label }}">Last name</label>{{ form.last_name }}{{ form.last_name.errors }}</div>
+            </div>
+            <div class="form-field"><label for="{{ form.username.id_for_label }}">Username</label>{{ form.username }}{{ form.username.errors }}</div>
+            <div class="form-field"><label for="{{ form.email.id_for_label }}">Email address</label>{{ form.email }}{{ form.email.errors }}</div>
+            <div class="form-field"><label for="{{ form.contact.id_for_label }}">Phone number</label>{{ form.contact }}{{ form.contact.errors }}</div>
+            <div class="form-field"><label>{{ form.priority_categories.label }}</label><div class="choice-grid">{{ form.priority_categories }}</div><p class="form-help">{{ form.priority_categories.help_text }}</p>{{ form.priority_categories.errors }}</div>
+            <div class="form-field"><label for="{{ form.password1.id_for_label }}">Password</label>{{ form.password1 }}{{ form.password1.errors }}</div>
+            <div class="form-field"><label for="{{ form.password2.id_for_label }}">Confirm password</label>{{ form.password2 }}{{ form.password2.errors }}</div>
+            <button class="btn btn-primary w-100 py-2" type="submit">Create account</button>
+            <p class="text-center mt-4 mb-0 small">Already registered? <a href="{% url 'login' %}">Sign in</a></p>
+        </form>
+    </section>
+</div>
+{% endblock %}

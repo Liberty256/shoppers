@@ -1,0 +1,12 @@
+{% extends 'admin_panel/base.html' %}
+{% block title %}Add delivery agent | Shoppers Admin{% endblock %}
+{% block admin_content %}
+<div class="page-heading"><div><p class="eyebrow">Delivery team</p><h1 class="page-title">New delivery agent</h1><p class="page-subtitle">This creates a private login for the agent workspace.</p></div></div>
+<div class="panel" style="max-width:760px"><div class="panel-body p-lg-4"><form method="post" class="form-shell">{% csrf_token %}{{ form.non_field_errors }}
+<div class="row g-3"><div class="col-md-6 form-field"><label for="{{ form.first_name.id_for_label }}">First name</label>{{ form.first_name }}{{ form.first_name.errors }}</div><div class="col-md-6 form-field"><label for="{{ form.last_name.id_for_label }}">Last name</label>{{ form.last_name }}{{ form.last_name.errors }}</div></div>
+<div class="row g-3"><div class="col-md-6 form-field"><label for="{{ form.username.id_for_label }}">Username</label>{{ form.username }}{{ form.username.errors }}</div><div class="col-md-6 form-field"><label for="{{ form.email.id_for_label }}">Email</label>{{ form.email }}{{ form.email.errors }}</div></div>
+<div class="row g-3"><div class="col-md-6 form-field"><label for="{{ form.phone.id_for_label }}">Phone number</label>{{ form.phone }}{{ form.phone.errors }}</div><div class="col-md-6 form-field"><label for="{{ form.vehicle_number.id_for_label }}">Vehicle number</label>{{ form.vehicle_number }}{{ form.vehicle_number.errors }}</div></div>
+<div class="row g-3"><div class="col-md-6 form-field"><label for="{{ form.password1.id_for_label }}">Temporary password</label>{{ form.password1 }}{{ form.password1.errors }}</div><div class="col-md-6 form-field"><label for="{{ form.password2.id_for_label }}">Confirm password</label>{{ form.password2 }}{{ form.password2.errors }}</div></div>
+<div class="d-flex gap-2"><button class="btn btn-primary" type="submit">Create agent</button><a class="btn btn-outline-secondary" href="{% url 'manage_agents' %}">Cancel</a></div>
+</form></div></div>
+{% endblock %}

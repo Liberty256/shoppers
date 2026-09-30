@@ -1,0 +1,16 @@
+{% extends 'base.html' %}
+{% block content %}
+<div class="dashboard-wrap">
+    <aside class="dashboard-sidebar">
+        <p class="sidebar-label">Store operations</p>
+        <nav class="dashboard-nav">
+            <a href="{% url 'dashboard' %}" {% if request.resolver_match.url_name == 'dashboard' %}class="active"{% endif %}><i class="bi bi-grid-1x2"></i> Overview</a>
+            <a href="{% url 'manage_orders' %}" {% if request.resolver_match.url_name == 'manage_orders' %}class="active"{% endif %}><i class="bi bi-receipt"></i> Orders</a>
+            <a href="{% url 'manage_products' %}" {% if request.resolver_match.url_name == 'manage_products' or request.resolver_match.url_name == 'add_product' or request.resolver_match.url_name == 'edit_product' %}class="active"{% endif %}><i class="bi bi-box-seam"></i> Products</a>
+            <a href="{% url 'manage_categories' %}" {% if request.resolver_match.url_name == 'manage_categories' %}class="active"{% endif %}><i class="bi bi-tags"></i> Categories</a>
+            <a href="{% url 'manage_agents' %}" {% if request.resolver_match.url_name == 'manage_agents' or request.resolver_match.url_name == 'add_agent' %}class="active"{% endif %}><i class="bi bi-truck"></i> Delivery agents</a>
+        </nav>
+    </aside>
+    <section class="dashboard-main">{% block admin_content %}{% endblock %}</section>
+</div>
+{% endblock %}

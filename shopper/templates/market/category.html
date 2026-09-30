@@ -1,0 +1,12 @@
+{% extends 'base.html' %}
+{% block title %}{{ category.name }} | Shoppers{% endblock %}
+{% block content %}
+<section class="content-section">
+    <div class="container">
+        <nav aria-label="breadcrumb"><ol class="breadcrumb"><li class="breadcrumb-item"><a href="{% url 'home' %}">Shop</a></li><li class="breadcrumb-item active">{{ category.name }}</li></ol></nav>
+        <div class="page-heading"><div><p class="eyebrow">Category</p><h1 class="page-title">{{ category.name }}</h1><p class="page-subtitle">{{ category.description }}</p></div></div>
+        {% if products %}<div class="product-grid">{% for product in products %}{% include 'market/_product_card.html' %}{% endfor %}</div>
+        {% else %}<div class="empty-state"><i class="bi bi-box-seam"></i><h3>No products here yet</h3><p>Explore another category while this collection is being prepared.</p><a class="btn btn-outline-primary" href="{% url 'home' %}">Back to shop</a></div>{% endif %}
+    </div>
+</section>
+{% endblock %}

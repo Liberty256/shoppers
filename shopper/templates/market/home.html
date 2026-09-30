@@ -1,0 +1,46 @@
+{% extends 'base.html' %}
+{% block title %}{% if query %}Search: {{ query }}{% else %}Shoppers | Everyday finds{% endif %}{% endblock %}
+{% block content %}
+{% if not query %}
+<section class="shop-intro">
+    <div class="container shop-intro-inner">
+        <div>
+            <p class="eyebrow">The everyday edit</p>
+            <h1>Good finds, delivered with care.</h1>
+            <p>Browse a considered collection of useful products and follow your order from checkout to your door.</p>
+        </div>
+        <div class="shop-promise">
+            <div class="promise-row"><i class="bi bi-patch-check"></i><span>Quality checked products</span></div>
+            <div class="promise-row"><i class="bi bi-shield-check"></i><span>Secure payments</span></div>
+            <div class="promise-row"><i class="bi bi-truck"></i><span>Tracked local delivery</span></div>
+        </div>
+    </div>
+</section>
+{% endif %}
+<section class="store-section">
+    <div class="container">
+        {% if categories %}
+        <div class="category-strip" aria-label="Product categories">
+            {% for cat in categories %}<a class="category-pill" href="{% url 'category' cat.id %}"><i class="bi bi-grid"></i>{{ cat.name }}</a>{% endfor %}
+        </div>
+        {% endif %}
+        <div class="section-heading">
+            <div>
+                <p class="eyebrow">{% if query %}Search results{% else %}Fresh picks{% endif %}</p>
+                <h2>{% if query %}Results for “{{ query }}”{% else %}Shop the collection{% endif %}</h2>
+                {% if query %}<p>{{ products|length }} product{{ products|length|pluralize }} found</p>{% endif %}
+            </div>
+        </div>
+        {% if products %}
+        <div class="product-grid">{% for product in products %}{% include 'market/_product_card.html' %}{% endfor %}</div>
+        {% else %}
+        <div class="empty-state">
+            <i class="bi bi-bag-x"></i>
+            <h3>{% if query %}No matching products{% else %}The shelves are being stocked{% endif %}</h3>
+            <p>{% if query %}Try a different product name or browse the full collection.{% else %}New products will appear here as soon as they are added.{% endif %}</p>
+            {% if query %}<a class="btn btn-outline-primary" href="{% url 'home' %}">View all products</a>{% endif %}
+        </div>
+        {% endif %}
+    </div>
+</section>
+{% endblock %}

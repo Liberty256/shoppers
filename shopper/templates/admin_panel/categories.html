@@ -1,0 +1,7 @@
+{% extends 'admin_panel/base.html' %}
+{% block title %}Categories | Shoppers Admin{% endblock %}
+{% block admin_content %}
+<div class="page-heading"><div><p class="eyebrow">Catalog structure</p><h1 class="page-title">Categories</h1><p class="page-subtitle">Organize products into useful collections.</p></div></div>
+<div class="dashboard-grid"><div class="panel"><div class="panel-header"><h2>Current categories</h2></div><div class="table-responsive"><table class="table"><thead><tr><th>Name</th><th>Description</th></tr></thead><tbody>{% for category in categories %}<tr><td><strong>{{ category.name }}</strong></td><td class="text-muted">{{ category.description|truncatechars:90 }}</td></tr>{% empty %}<tr><td colspan="2" class="text-center text-muted py-5">No categories yet.</td></tr>{% endfor %}</tbody></table></div></div>
+<div class="panel"><div class="panel-header"><h2>Add category</h2></div><div class="panel-body"><form method="post" class="form-shell">{% csrf_token %}{% for field in form %}<div class="form-field"><label for="{{ field.id_for_label }}">{{ field.label }}</label>{{ field }}{{ field.errors }}</div>{% endfor %}<button class="btn btn-primary" type="submit">Create category</button></form></div></div></div>
+{% endblock %}

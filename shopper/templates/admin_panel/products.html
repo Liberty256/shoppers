@@ -1,0 +1,9 @@
+{% extends 'admin_panel/base.html' %}
+{% block title %}Products | Shoppers Admin{% endblock %}
+{% block admin_content %}
+<div class="page-heading"><div><p class="eyebrow">Catalog</p><h1 class="page-title">Products</h1><p class="page-subtitle">Control pricing, availability, and stock.</p></div><a class="btn btn-primary" href="{% url 'add_product' %}"><i class="bi bi-plus-lg me-1"></i>Add product</a></div>
+<div class="panel"><div class="table-responsive"><table class="table"><thead><tr><th>Product</th><th>Category</th><th>Price</th><th>Stock</th><th>Deal</th><th>Visibility</th><th></th></tr></thead><tbody>
+{% for product in products %}<tr><td><div class="d-flex align-items-center gap-3">{% if product.image %}<img src="{{ product.image.url }}" width="46" height="46" class="rounded" style="object-fit:cover" alt="">{% else %}<span class="d-grid bg-light rounded" style="width:46px;height:46px;place-items:center"><i class="bi bi-image"></i></span>{% endif %}<strong>{{ product.name }}</strong></div></td><td>{{ product.category.name }}</td><td>${{ product.price }}</td><td>{% if product.stock <= 5 %}<span class="text-danger fw-semibold">{{ product.stock }}</span>{% else %}{{ product.stock }}{% endif %}</td><td>{% if product.is_hot_deal %}<span class="status status-hot">Hot{% if product.hot_deal_rank %} {{ product.hot_deal_rank }}{% endif %}</span>{% else %}<span class="text-muted">-</span>{% endif %}</td><td>{% if product.is_active %}<span class="status status-delivered">Live</span>{% else %}<span class="status status-pending">Hidden</span>{% endif %}</td><td class="text-end"><a class="btn btn-sm btn-outline-secondary" href="{% url 'edit_product' product.id %}" title="Edit product" aria-label="Edit {{ product.name }}"><i class="bi bi-pencil"></i></a></td></tr>
+{% empty %}<tr><td colspan="7" class="text-center text-muted py-5">No products yet. Add one to start the catalog.</td></tr>{% endfor %}
+</tbody></table></div></div>
+{% endblock %}

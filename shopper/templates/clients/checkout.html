@@ -1,0 +1,12 @@
+{% extends 'base.html' %}
+{% block title %}Checkout | Shoppers{% endblock %}
+{% block content %}
+<section class="content-section"><div class="container">
+    <div class="page-heading"><div><p class="eyebrow">Secure checkout</p><h1 class="page-title">Delivery details</h1><p class="page-subtitle">Confirm where and how your order should arrive.</p></div></div>
+    <div class="row g-4"><div class="col-lg-7"><div class="panel"><div class="panel-body p-lg-4"><form method="post" class="form-shell">{% csrf_token %}
+        {% for field in form %}<div class="form-field"><label for="{{ field.id_for_label }}">{{ field.label }}</label>{{ field }}{% if field.help_text %}<div class="form-help">{{ field.help_text }}</div>{% endif %}{{ field.errors }}</div>{% endfor %}
+        <button class="btn btn-primary w-100 py-2" type="submit"><i class="bi bi-lock me-2"></i>Place order · ${{ total }}</button>
+    </form></div></div></div>
+    <div class="col-lg-5"><div class="panel"><div class="panel-header"><h2>Your order</h2><span class="text-muted small">{{ cart_items|length }} item{{ cart_items|length|pluralize }}</span></div><div class="panel-body">{% for item in cart_items %}<div class="d-flex justify-content-between gap-3 py-2"><span>{{ item.product.name }} <span class="text-muted">× {{ item.quantity }}</span></span><strong>${{ item.subtotal }}</strong></div>{% endfor %}<hr><div class="d-flex justify-content-between fs-5"><strong>Total</strong><strong>${{ total }}</strong></div></div></div></div></div>
+</div></section>
+{% endblock %}

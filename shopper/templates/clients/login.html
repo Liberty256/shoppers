@@ -1,0 +1,17 @@
+{% extends 'base.html' %}
+{% block title %}Sign in | Shoppers{% endblock %}
+{% block content %}
+<div class="auth-layout">
+    <aside class="auth-aside"><p class="eyebrow text-warning">Welcome back</p><h1>Your next good find is waiting.</h1><p>Sign in to check out, track deliveries, or continue managing your Shoppers workspace.</p></aside>
+    <section class="auth-main">
+        <form method="post" class="auth-form form-shell">
+            {% csrf_token %}<input type="hidden" name="next" value="{{ next|default:'' }}">
+            <h2>Sign in</h2><p>Enter your account details to continue.</p>
+            <div class="form-field"><label for="username">Username</label><input id="username" type="text" name="username" autocomplete="username" autofocus required></div>
+            <div class="form-field"><label for="password">Password</label><input id="password" type="password" name="password" autocomplete="current-password" required></div>
+            <button class="btn btn-primary w-100 py-2" type="submit">Sign in</button>
+            <p class="text-center mt-4 mb-0 small">New to Shoppers? <a href="{% url 'register' %}">Create an account</a></p>
+        </form>
+    </section>
+</div>
+{% endblock %}
